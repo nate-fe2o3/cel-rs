@@ -12,9 +12,12 @@ checksum = "e16d2d3311acee920a9eb8d33b8cbc1787ce4a264e85f964c2404b969bdcd487"
 name = "cel-parser"
 version = "0.1.0"
 dependencies = [
+ "anyhow",
+ "itertools",
  "owo-colors",
  "proc-macro2",
  "quote",
+ "typenum",
 ]
 
 [[package]]
@@ -23,6 +26,7 @@ version = "0.1.0"
 dependencies = [
  "anyhow",
  "cel-rs-macros",
+ "itertools",
  "typenum",
 ]
 
@@ -35,6 +39,12 @@ dependencies = [
  "quote",
  "syn",
 ]
+
+[[package]]
+name = "either"
+version = "1.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "48c757948c5ede0e46177b7add2e67155f70e33c07fea8284df6576da70b3719"
 
 [[package]]
 name = "hermit-abi"
@@ -58,6 +68,15 @@ name = "is_ci"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7655c9839580ee829dfacba1d1278c2b7883e50a277ff7541299489d6bdfdc45"
+
+[[package]]
+name = "itertools"
+version = "0.14.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2b192c782037fadd9cfa75548310488aabdbf3d2da73885b31bd0abd03351285"
+dependencies = [
+ "either",
+]
 
 [[package]]
 name = "libc"

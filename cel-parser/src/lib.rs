@@ -1,4 +1,6 @@
 use std::iter::Peekable;
+mod min_compiled;
+mod tokens;
 
 use owo_colors::OwoColorize;
 use proc_macro2::{Delimiter, Spacing, Span, TokenStream, TokenTree};
