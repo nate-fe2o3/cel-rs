@@ -409,7 +409,7 @@ mod tests {
         operations.op0(|| -> u32 { 100 });
         operations.op0(|| -> u32 { 10 });
         operations.op3(|x: u32, y: u32, z: u32| -> u32 { x + y - z })?;
-        operations.op1(|x: u32| -> String { format!("result: {}", x) })?;
+        operations.op1(|x: u32| -> String { format!("result: {x}") })?;
 
         let final_result: String = operations.call0()?;
         assert_eq!(final_result, "result: 132");
@@ -426,7 +426,7 @@ mod tests {
         operations.op0(|| -> u32 { 100 });
         operations.op0(|| -> u32 { 10 });
         operations.op3(|x: u32, y: u32, z: u32| -> u32 { x + y - z })?;
-        operations.op1(|x: u32| -> String { format!("result: {}", x) })?;
+        operations.op1(|x: u32| -> String { format!("result: {x}") })?;
 
         let final_result: String = operations.call1(30u32)?;
         assert_eq!(final_result, "result: 132");
@@ -450,7 +450,7 @@ mod tests {
         root_segment.join2(segment_1, segment_2)?;
 
         let result = root_segment.call0::<u32>()?;
-        println!("Result: {}", result);
+        println!("Result: {result}");
 
         Ok(())
     }

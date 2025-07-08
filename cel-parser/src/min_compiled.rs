@@ -1,19 +1,11 @@
 use anyhow::{Context, Result, anyhow};
 use itertools::{Itertools, PeekNth, peek_nth};
 use owo_colors::OwoColorize;
-use proc_macro2::{Delimiter, Group, Ident, Punct, Spacing, Span, TokenStream, TokenTree};
+use proc_macro2::{Delimiter, Group, Span, TokenStream, TokenTree};
 use quote::{TokenStreamExt, quote, quote_spanned};
-use std::{
-    clone, collections::HashMap, error::Error, iter::Peekable, mem::discriminant, str::FromStr,
-    vec::IntoIter,
-};
-use typenum::U2;
+use std::mem::discriminant;
 
-use crate::{
-    list_traits::{IntoList, ListIndex},
-    tokens::*,
-    tuple_list::IntoTupleList,
-};
+use crate::tokens::*;
 
 fn peek<T: Iterator<Item = TokenTree>>(input: &mut PeekNth<T>) -> Result<&TokenTree> {
     let t = input.peek().context("Unexpected Eof")?;
@@ -226,7 +218,7 @@ fn parse_argument_expression_list<T: Iterator<Item = TokenTree>>(
     let group_token = next(input)?;
     let arg_stream = get_group(group_token)?.stream();
     if !arg_stream.is_empty() {
-        let mut nested = peek_nth(arg_stream.into_iter());
+        let mut nested = peek_nth(arg_stream);
         let first = peek(&mut nested)?;
         if let Ok(maybe_colon) = peek_n(&mut nested, 1)
             && match_token(maybe_colon, &COLON)
@@ -286,7 +278,7 @@ fn parse_array_literal<T: Iterator<Item = TokenTree>>(
     let group = expect_token(input, &SQUARE_GROUP)?;
     let arg_stream = get_group(group)?.stream();
     if !arg_stream.is_empty() {
-        let mut nested = peek_nth(arg_stream.into_iter());
+        let mut nested = peek_nth(arg_stream);
         output.extend(parse_argument_list(&mut nested)?);
     }
     Ok(quote! {vec![#output]})
@@ -301,7 +293,7 @@ fn parse_dictionary_literal<T: Iterator<Item = TokenTree>>(
     let group = expect_token(input, &CURLY_GROUP)?;
     let arg_stream = get_group(group)?.stream();
     if !arg_stream.is_empty() {
-        let mut nested = peek_nth(arg_stream.into_iter());
+        let mut nested = peek_nth(arg_stream);
         output.extend(parse_named_argument_list(&mut nested)?);
     }
     Ok(quote! {(#output).into_tuple_list()})
@@ -482,6 +474,8 @@ impl<I: Iterator<Item = TokenTree> + Clone> CELParser2<I> {
 
 #[cfg(test)]
 mod tests {
+    use std::str::FromStr;
+
     use super::*;
 
     #[test]

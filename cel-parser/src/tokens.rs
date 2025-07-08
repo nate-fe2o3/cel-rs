@@ -1,4 +1,4 @@
-use std::{str::FromStr, sync::LazyLock};
+use std::sync::LazyLock;
 
 use proc_macro2::{Delimiter, Group, Ident, Literal, Punct, Spacing, Span, TokenStream, TokenTree};
 

@@ -277,7 +277,7 @@ mod tests {
     #[test]
     fn binary_operation_args_of_different_types() {
         let result = Segment::new()
-            .op2(|x, y| format!("{} {}", x, y))
+            .op2(|x, y| format!("{x} {y}"))
             .call(("Hello", 12));
 
         assert_eq!(result.unwrap(), "Hello 12");
@@ -290,7 +290,7 @@ mod tests {
             .op0(|| 10)
             .op2(|x, y| x + y)
             .op1(|x| x * 2)
-            .op1(|x| format!("{}", x))
+            .op1(|x| format!("{x}"))
             .call(());
 
         assert_eq!(result.unwrap(), "104");
@@ -301,7 +301,7 @@ mod tests {
         let result = Segment::<(&str,)>::new()
             .op1(|s| s.len())
             .op1(|n| n * 2)
-            .op1(|n| format!("Length * 2 = {}", n))
+            .op1(|n| format!("Length * 2 = {n}"))
             .call(("Hello",));
 
         assert_eq!(result.unwrap(), "Length * 2 = 10");

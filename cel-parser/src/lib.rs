@@ -648,7 +648,7 @@ mod tests {
 
         if !parser.is_expression() {
             if let Some(formatted_error) = parser.format_error(source, file!(), line) {
-                println!("{}", formatted_error);
+                println!("{formatted_error}");
             }
         }
     }

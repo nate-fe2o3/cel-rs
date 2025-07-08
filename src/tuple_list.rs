@@ -195,7 +195,7 @@ mod tests {
     #[test]
     fn tuple_list() {
         let list = (1, 2.5, "Hello").into_tuple_list();
-        println!("{:?}", list);
+        println!("{list:?}");
     }
 
     #[test]
